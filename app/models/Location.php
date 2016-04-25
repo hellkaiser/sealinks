@@ -17,6 +17,9 @@
 		public function locationTranslate(){
 			return $this->hasMany("LocationTranslate","location_id");
 		}
+		public function contact(){
+			return $this->hasMany("Contact","location_id");
+		}
 		public function service(){
 			return $this->belongsToMany("Service","location_service")->withPivot('id');
 		}

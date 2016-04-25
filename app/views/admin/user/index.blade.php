@@ -48,7 +48,11 @@
                           </td>
                           <td>
                             <a href="{{URL::route("admin.user_edit_get",array($item->id))}}" class="btn btn-app"><i class="fa fa-edit"></i>Sửa</a>
-                            <a href="{{URL::route("admin.user_del_get",array($item->id))}}" class="btn btn-app delete"><i class="fa fa-trash"></i>Xóa</a>
+                            @if(!Sentry::findThrottlerByUserId($item->id)->isBanned())
+                              <a href="{{URL::route("admin.user_del_get",array($item->id))}}" class="btn btn-app delete"><i class="fa fa-trash"></i>Banned</a>
+                            @else
+                              <a href="javascript:void(0)" class="btn btn-app disabled"><i class="fa fa-trash"></i>Banned</a>
+                            @endif
                           </td>
                       @endforeach                 
                     </tbody>

@@ -96,11 +96,15 @@
 
 			// lấy service với id 
 			$service_item = \Service::with("serviceTranslate","location")->find($id);
-			// lấy service theo language vietnam
-			$service_item['vn'] = $service_item->serviceTranslate()->where("lang_code","vn")->first();
-			// lấy service theo language enlish
-			$service_item['en'] = $service_item->serviceTranslate()->where("lang_code","en")->first();
-			return \View::make("admin.service.edit")->with("title","Sửa Dịch Vụ")->with("location",$location)->with("service",$service_select)->with("service_item",$service_item);
+			if($service_id){
+				// lấy service theo language vietnam
+				$service_item['vn'] = $service_item->serviceTranslate()->where("lang_code","vn")->first();
+				// lấy service theo language enlish
+				$service_item['en'] = $service_item->serviceTranslate()->where("lang_code","en")->first();
+				return \View::make("admin.service.edit")->with("title","Sửa Dịch Vụ")->with("location",$location)->with("service",$service_select)->with("service_item",$service_item);
+			}else{
+				return \Redirect::route("admin.service_index_get")->with("error","Không tồn tại dịch vụ này trong hệ thống");
+			}
 		}
 		public function postEdit($id){
 			$service_name_en = \Input::get("service_name_en");
@@ -163,8 +167,12 @@
 		}
 		public function getDel($id){
 			$service = \Service::find($id);
-			$service->delete();
-			return \Redirect::route("admin.service_index_get")->with("success","Bạn đã xóa dịch vụ thành công");
+			if($service){
+				$service->delete();
+				return \Redirect::route("admin.service_index_get")->with("success","Bạn đã xóa dịch vụ thành công");
+			}else{
+				return \Redirect::route("admin.service_index_get")->with("error","Không tồn tại dịch vụ này trong hệ thống");
+			}
 		}
 		public function postEditAll(){
 			$active = \Input::get("active");

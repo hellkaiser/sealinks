@@ -49,11 +49,15 @@
 		public function getEdit($id){
 			// get location by id
 			$location = \Location::with("locationTranslate")->find($id);
-			//get data by vietnam language of location
-			$location['vn'] = $location->locationTranslate()->where("lang_code","vn")->first();
-			// get data by english language of location
-			$location['en'] = $location->locationTranslate()->where("lang_code","en")->first();
-			return \View::make("admin.location.edit")->with("title","Sửa Địa Điểm")->with("location",$location);
+			if($location){
+				//get data by vietnam language of location
+				$location['vn'] = $location->locationTranslate()->where("lang_code","vn")->first();
+				// get data by english language of location
+				$location['en'] = $location->locationTranslate()->where("lang_code","en")->first();
+				return \View::make("admin.location.edit")->with("title","Sửa Địa Điểm")->with("location",$location);
+			}else{
+				return \Redirect::route("index.location_index_get")->with("error","Không tồn tại địa điểm này trong hệ thống");
+			}
 		}
 		// method handle edit location
 		public function postEdit($id){
@@ -105,8 +109,12 @@
 		// method handle delete location
 		public function getDel($id){
 			$location = \Location::find($id);
-			$location->delete();
-			return \Redirect::route("admin.location_index_get")->with("success","Bạn đã xóa địa điểm thành công");
+			if($location){
+				$location->delete();
+				return \Redirect::route("admin.location_index_get")->with("success","Bạn đã xóa địa điểm thành công");
+			}else{
+				return \Redirect::route("index.location_index_get")->with("error","Không tồn tại địa điểm này trong hệ thống");
+			}
 		}
 	}
 ?>

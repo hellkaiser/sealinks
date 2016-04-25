@@ -11,25 +11,27 @@
             </div>
             <div class="pull-left info">
               <p>{{Sentry::getUser()->first_name." ".Sentry::getUser()->last_name}}</p>
+              <a href="javascript:void(0)">
+                <i class="fa fa-circle text-success"></i> 
+                @if(Sentry::hasAccess("superuser"))
+                    Super Admin
+                @elseif(Sentry::hasAccess("order"))
+                    Order Manager
+                @else
+                    Editor
+                @endif
+              </a>
             </div>
           </div>
-          <!-- search form -->
-          {{Form::open(array("class"=>"sidebar-form"))}}
-            <div class="input-group">
-              {{Form::text("q","",array("class"=>"form-control","placeholder"=>"Nhập mã đơn hàng..."))}}
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
-              </span>
-            </div>
-          {{Form::close()}}
-          <!-- /.search form -->
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header"><strong>CẤU HÌNH HỆ THỐNG</strong></li>
             <li><a href="{{URL::route("admin.location_index_get")}}"><i class="fa fa-map-marker text-red"></i><span>Quản Lý Địa Điểm</span></a></li>
             <li><a href="{{URL::route("admin.service_index_get")}}"><i class="fa fa-bed text-red"></i><span>Quản Lý Dịch Vụ</span></a></li>
             <li><a href="{{URL::route("admin.user_index_get")}}"><i class="fa fa-users text-red"></i><span>Quản Lý Thành Viên</span></a></li>
-            <li><a href="#"><i class="fa fa-cogs text-red"></i><span>Cài Đặt hệ Thống</span></a></li>
+            <li><a href="{{URL::route("admin.contact_index_get")}}"><i class="fa fa-phone text-red"></i><span>Quản Lý Liên Hệ</span></a></li>
+            <li><a href="{{URL::route("admin.menu_index_get")}}"><i class="fa fa-bars text-red"></i><span>Menu</span></a></li>
+            <li><a href="{{URL::route("admin.setting_index_get")}}"><i class="fa fa-cogs text-red"></i><span>Cài Đặt hệ Thống</span></a></li>
             <li class="header"><strong>QUẢN LÝ SẢN PHẨM</strong></li>
             <li class="active treeview">
               <a href="#">

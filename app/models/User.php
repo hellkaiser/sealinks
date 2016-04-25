@@ -11,7 +11,7 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User  {
 		"email.unique" => "Email đã tồn tại trong hệ thống",
 		"password.min" => "Mật khẩu phải lớn hơn :min ký tự",
 		"repassword.required" => "Vui lòng nhập xác nhận mật khẩu",
-		"repassword.same" => "Mật khẩu và xác nhận mật khẩu không giống nhau" 
+		"repassword.same" => "Mật khẩu và xác nhận mật khẩu không giống nhau",
 	);
 	/**** Setting rule login validation  ****/
 	public static $login_rule = array(

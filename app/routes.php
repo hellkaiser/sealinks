@@ -45,4 +45,17 @@ Route::group(array("prefix"=>"admin"),function(){
 	Route::post("user/editall",array("as"=>"admin.user_editall_post","before"=>"csrf|admin.check_access:superuser","uses"=>"Controllers\Admin\UserController@postEditAll"));
 	Route::get("user/edit/{id}",array("as"=>"admin.user_edit_get","before"=>"admin.check_access:superuser","uses"=>"Controllers\Admin\UserController@getEdit"))->where("id","[0-9]+");
 	Route::get("user/del/{id}",array("as"=>"admin.user_del_get","before"=>"admin.check_access:superuser","uses"=>"Controllers\Admin\UserController@getDel"))->where("id","[0-9]+");
+	Route::post("user/edit/{id}",array("as"=>"admin.user_edit_post","before"=>"csrf|admin.check_access:superuser","uses"=>"Controllers\Admin\UserController@postEdit"))->where("id","[0-9]+");
+	/**** Route Setting  ****/
+	Route::get("setting",array("as"=>"admin.setting_index_get","before"=>"admin.check_access:superuser","uses"=>"Controllers\Admin\SettingController@getIndex"));
+	Route::post("setting/general",array("as"=>"admin.setting_general_post","before"=>"csrf|admin.check_access:superuser","uses"=>"Controllers\Admin\SettingController@postGeneral"));
+	Route::post("setting/email",array("as"=>"admin.setting_email_post","before"=>"csrf|admin.check_access:superuser","uses"=>"Controllers\Admin\SettingController@postEmail"));
+	/**** Route Contact ****/
+	Route::get("contact",array("as"=>"admin.contact_index_get","before"=>"admin.check_access:superuser","uses"=>"Controllers\Admin\ContactController@getIndex"));
+	Route::get("contact/add",array("as"=>"admin.contact_add_get","before"=>"admin.check_access:superuser","uses"=>"Controllers\Admin\ContactController@getAdd"));
+	Route::post("contact/add",array("as"=>"admin.contact_add_post","before"=>"csrf|admin.check_access:superuser","uses"=>"Controllers\Admin\ContactController@postAdd"));
+	Route::post("contact/action/{id}",array("as"=>"admin.contact_action_post","before"=>"csrf|admin.check_access:superuser","uses"=>"Controllers\Admin\ContactController@postAction"))->where(array("id","[0-9]+"));
+	/**** Route Menu ****/
+	Route::get("menu",array("as"=>"admin.menu_index_get","before"=>"admin.check_access:superuser","uses"=>"Controllers\Admin\MenuController@getIndex"));
+	Route::get("menu/update",array("as"=>"admin.menu_update_get","before"=>"admin.check_access:superuser","uses"=>"Controllers\Admin\MenuController@getUpdate"));
 });

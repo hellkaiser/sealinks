@@ -24,6 +24,10 @@
 					return Redirect::route("admin.login_get")->with("error","Mật khẩu không đúng");
 				}catch(\Cartalyst\Sentry\Users\UserNotFoundException $e){
 					return Redirect::route("admin.login_get")->with("error","Email không tồn tại");
+				}catch (\Cartalyst\Sentry\Users\UserNotActivatedException $e){
+				    return Redirect::route("admin.login_get")->with("error","Thành viên này chưa được kích hoạt");
+				}catch (\Cartalyst\Sentry\Throttling\UserBannedException $e){
+				    return Redirect::route("admin.login_get")->with("error","Thành viên này chưa được kích hoạt");
 				}
 			}else{
 				return Redirect::route("admin.login_get")->with("error",$valid->errors()->first());
